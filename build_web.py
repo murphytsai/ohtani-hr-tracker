@@ -414,6 +414,7 @@ def build_html():
             initPitcherChart(rawData);
             initPitcherGrid(rawData);
             populateFilters(rawData);
+            renderTable(currentData);
 
             document.getElementById('year-filter').addEventListener('change', filterData);
             document.getElementById('pitcher-select-filter').addEventListener('change', filterData);
