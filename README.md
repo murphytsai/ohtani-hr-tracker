@@ -7,6 +7,7 @@
 An interactive, real-time, bilingual (**English** / **Traditional Chinese**) web dashboard tracking all 300+ career MLB home runs hit by **Shohei Ohtani** (大谷翔平), complete with victimized pitcher analysis, MLB official team logos, pitcher headshots, and official video highlights.
 
 ![Dashboard Preview](docs/assets/dashboard_preview.png)
+![Detailed HR Log Table Preview](docs/assets/table_preview.png)
 
 ---
 
