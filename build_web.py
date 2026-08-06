@@ -278,7 +278,7 @@ def build_html():
     </div>
 
     <script>
-        const rawData = """ + json_str + """;
+        const rawData = (""" + json_str + """).sort((a,b) => b.hr_num - a.hr_num);
         let currentData = [...rawData];
         let currentLang = 'en'; // Default language: English
 
