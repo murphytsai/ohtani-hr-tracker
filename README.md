@@ -1,7 +1,7 @@
 # ⚾ Shohei Ohtani Home Run Tracker & Pitcher Analysis (大谷翔平全壘打與被打投手統計)
 
-[![Daily Data Sync](https://github.com/YOUR_GITHUB_USERNAME/ohtani-hr-tracker/actions/workflows/update.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/ohtani-hr-tracker/actions)
-[![Live Demo](https://img.shields.io/badge/Live-Dashboard-blue?style=flat-square&logo=github)](https://YOUR_GITHUB_USERNAME.github.io/ohtani-hr-tracker/)
+[![Daily Data Sync](https://github.com/murphytsai/ohtani-hr-tracker/actions/workflows/update.yml/badge.svg)](https://github.com/murphytsai/ohtani-hr-tracker/actions)
+[![Live Demo](https://img.shields.io/badge/Live-Dashboard-blue?style=flat-square&logo=github)](https://murphytsai.github.io/ohtani-hr-tracker/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An interactive, real-time, bilingual (**English** / **Traditional Chinese**) web dashboard tracking all 300+ career MLB home runs hit by **Shohei Ohtani** (大谷翔平), complete with victimized pitcher analysis, MLB official team logos, pitcher headshots, and official video highlights.
