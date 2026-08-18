@@ -77,7 +77,7 @@ ohtani-hr-tracker/
 
 This repository includes a pre-configured GitHub Actions workflow (`.github/workflows/update.yml`).
 
-- **Schedule**: Triggers daily at `00:00 UTC` (08:00 AM TST).
+- **Schedule**: Triggers daily at `05:00 UTC` (13:00 TST).
 - **Behavior**: Fetches latest game logs from MLB API, updates `ohtani_hrs_mlb.json`, regenerates `index.html`, and commits changes automatically.
 
 ### How to enable GitHub Pages hosting:

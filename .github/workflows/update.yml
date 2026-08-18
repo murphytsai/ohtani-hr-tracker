@@ -2,7 +2,7 @@ name: Daily Ohtani HR Data Sync & Deploy
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Automatically runs every day at 08:00 AM TST (00:00 UTC)
+    - cron: '0 5 * * *' # Automatically runs every day at 13:00 TST (05:00 UTC)
   workflow_dispatch: # Allows manual trigger from GitHub Actions tab
 
 jobs:
