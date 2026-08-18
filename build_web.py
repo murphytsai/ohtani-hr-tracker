@@ -130,7 +130,7 @@ def build_html():
         </div>
 
         <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <!-- Yearly HR Breakdown -->
             <div class="glass-card rounded-2xl p-6">
                 <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
@@ -161,6 +161,17 @@ def build_html():
                 </h3>
                 <div class="h-60 relative">
                     <canvas id="pitcherChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Pitch Type Breakdown -->
+            <div class="glass-card rounded-2xl p-6 border-t-2 border-purple-500/50">
+                <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 12l12-3"></path></svg>
+                    <span data-i18n="chart_pitch_type_title">HR Count by Pitch Type</span>
+                </h3>
+                <div class="h-60 relative">
+                    <canvas id="pitchTypeChart"></canvas>
                 </div>
             </div>
         </div>
@@ -297,6 +308,7 @@ def build_html():
                 chart_yearly_title: 'Yearly HR Count',
                 chart_inning_title: 'HR Count by Inning',
                 chart_pitcher_title: 'Top 10 Victimized Pitchers',
+                chart_pitch_type_title: 'HR Count by Pitch Type',
                 pitcher_grid_title: 'Victimized Pitcher Directory',
                 pitcher_grid_sub: 'Click any pitcher card to quickly filter home run logs below',
                 search_pitcher_ph: 'Search pitcher...',
@@ -342,6 +354,7 @@ def build_html():
                 chart_yearly_title: '歷年全壘打數量統計 (Yearly)',
                 chart_inning_title: '各局全壘打分布統計 (Inning)',
                 chart_pitcher_title: '挨轟最多全壘打投手 Top 10',
+                chart_pitch_type_title: '被擊出全壘打的球種分布',
                 pitcher_grid_title: '受害投手全列表與被轟次數排行',
                 pitcher_grid_sub: '點擊投手卡片可快速在下方表格中篩選該投手的被轟紀錄',
                 search_pitcher_ph: '搜尋投手姓名...',
@@ -412,6 +425,7 @@ def build_html():
             initYearlyChart(rawData);
             initInningChart(rawData);
             initPitcherChart(rawData);
+            initPitchTypeChart(rawData);
             initPitcherGrid(rawData);
             populateFilters(rawData);
             renderTable(currentData);
@@ -604,6 +618,66 @@ def build_html():
                         data: top10.map(item => item[1]),
                         backgroundColor: 'rgba(56, 189, 248, 0.75)',
                         borderColor: '#38bdf8',
+                        borderWidth: 1.5,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255,255,255,0.08)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initPitchTypeChart(data) {
+            const pitchTypeCounts = {};
+            data.forEach(d => {
+                const pitchType = d.pitch_type || 'N/A';
+                pitchTypeCounts[pitchType] = (pitchTypeCounts[pitchType] || 0) + 1;
+            });
+
+            const sorted = Object.entries(pitchTypeCounts)
+                .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+            const pitchColors = [
+                'rgba(168, 85, 247, 0.82)',
+                'rgba(139, 92, 246, 0.82)',
+                'rgba(124, 58, 237, 0.82)',
+                'rgba(99, 102, 241, 0.82)',
+                'rgba(59, 130, 246, 0.82)',
+                'rgba(14, 165, 233, 0.82)',
+                'rgba(20, 184, 166, 0.82)',
+                'rgba(16, 185, 129, 0.82)',
+                'rgba(234, 179, 8, 0.82)',
+                'rgba(249, 115, 22, 0.82)',
+                'rgba(244, 63, 94, 0.82)'
+            ];
+
+            const ctx = document.getElementById('pitchTypeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sorted.map(item => item[0]),
+                    datasets: [{
+                        label: 'HRs',
+                        data: sorted.map(item => item[1]),
+                        backgroundColor: sorted.map((_, idx) => pitchColors[idx % pitchColors.length]),
+                        borderColor: sorted.map((_, idx) => pitchColors[idx % pitchColors.length].replace('0.82', '1')),
                         borderWidth: 1.5,
                         borderRadius: 6
                     }]

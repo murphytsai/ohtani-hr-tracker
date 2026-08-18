@@ -22,6 +22,7 @@ An interactive, real-time, bilingual (**English** / **Traditional Chinese**) web
   - **Yearly HR Count**: Breakdown of home runs hit per season.
   - **Inning HR Breakdown**: Distribution of home runs by inning (including 1st-inning leadoff HRs & Extra innings).
   - **Top 10 Victimized Pitchers**: Leaderboard of pitchers who surrendered the most HRs to Ohtani.
+  - **Pitch Type HR Breakdown**: Distribution of the pitch types Ohtani homered off.
 - 🔍 **Search & Multi-Filter**: Filter by Season, Pitcher name, Team, Pitch Type, or search keyword dynamically.
 
 ---
