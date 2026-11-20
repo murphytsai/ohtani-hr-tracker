@@ -2,9 +2,16 @@ import concurrent.futures
 import requests
 import json
 import time
+import re
+
+from video_audit import apply_overrides, load_overrides
+from pathlib import Path
 
 OHTANI_ID = 660271
 SEASONS = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+
+HOME_RUN_TITLE = re.compile(r"\b(home run|homer(?:s|ed)?|hr|big fly)\b", re.IGNORECASE)
+WRONG_PLAY_TITLE = re.compile(r"\b(strikes? out|fans? (?:shohei )?ohtani)\b", re.IGNORECASE)
 
 def fetch_game_pbp_and_video(g, season):
     game_pk = g['game']['gamePk']
@@ -80,7 +87,10 @@ def fetch_game_pbp_and_video(g, season):
                 blurb = item.get('blurb', '') or item.get('description', '') or ''
                 full_text = (headline + " " + blurb).lower()
                 
-                if 'ohtani' in full_text and ('homer' in full_text or 'home run' in full_text or 'hr' in full_text):
+                # Require the headline itself to describe Ohtani's home run. A loose
+                # blurb-only match previously attached strikeout clips from the same game.
+                if ('ohtani' in headline.lower() and HOME_RUN_TITLE.search(headline)
+                        and not WRONG_PLAY_TITLE.search(headline)):
                     playbacks = item.get('playbacks', [])
                     mp4s = [p.get('url') for p in playbacks if 'mp4' in p.get('url', '')]
                     if mp4s:
@@ -160,6 +170,9 @@ def fetch_all_hrs():
         yr = hr['year']
         year_counters[yr] = year_counters.get(yr, 0) + 1
         hr['season_hr_num'] = year_counters[yr]
+
+    # Keep reviewed corrections/removals across automated data refreshes.
+    apply_overrides(all_hrs, load_overrides(Path('manual_video_overrides.json')))
         
     print(f"Total HRs fetched with video links: {len(all_hrs)}", flush=True)
     

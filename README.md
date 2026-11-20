@@ -36,10 +36,43 @@ ohtani-hr-tracker/
 ├── build_web.py            # Python generator script for index.html (i18n & UI logic)
 ├── cron_update.py          # Master updater script (fetch + build)
 ├── generate_data.py        # Real-time MLB API & Statcast data fetcher
+├── video_audit.py          # Audit highlight quality and export a CSV report
+├── manual_video_overrides.json # Durable reviewed corrections/removals
 ├── index.html              # Generated responsive web dashboard artifact
 ├── ohtani_hrs_mlb.json     # Complete dataset storing all career home run records
 └── README.md
 ```
+
+### Auditing video highlights
+
+Run the audit without changing the dataset:
+
+```bash
+python3 video_audit.py
+```
+
+Review `video_audit_report.csv`, especially rows marked `invalid` or `review`. To
+keep a correction across future daily refreshes, add it to
+`manual_video_overrides.json`:
+
+```json
+{
+  "overrides": [
+    {"hr_num": 203, "action": "remove", "note": "Strikeout clip"},
+    {
+      "hr_num": 241,
+      "action": "replace",
+      "video_url": "https://example.com/correct.mp4",
+      "video_title": "Shohei Ohtani's home run",
+      "video_thumbnail": "https://example.com/correct.jpg"
+    }
+  ]
+}
+```
+
+`generate_data.py` automatically applies these overrides after assigning home-run
+numbers. To apply them manually to an existing file, run
+`python3 video_audit.py --apply`.
 
 ---
 

@@ -16,3 +16,7 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# Vibe Hub runtime
+.vibe.pgid
+.vibe_ports

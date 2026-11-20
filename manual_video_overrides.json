@@ -1,0 +1,22 @@
+{
+  "overrides": [
+    {
+      "hr_num": 70,
+      "date": "2021-06-20",
+      "action": "remove",
+      "note": "The linked clip is Mize striking out Ohtani."
+    },
+    {
+      "hr_num": 262,
+      "date": "2025-07-23",
+      "action": "remove",
+      "note": "The linked clip is Chris Paddack striking out Ohtani."
+    },
+    {
+      "hr_num": 265,
+      "date": "2025-08-09",
+      "action": "remove",
+      "note": "The linked clip is Chris Bassitt striking out Ohtani."
+    }
+  ]
+}
